@@ -2,7 +2,7 @@
     <div class="frame_div">        
         <div v-if="current_projects.length">
             <strong>List</strong>
-            <table width="500px">
+            <table width="100%">
                 <tr>
                     <td width="5%">№</td>
                     <td width="5%">Active</td>
@@ -21,7 +21,7 @@
             </table>
         </div>
         <div v-else>
-            <strong>Not projects</strong>
+            <strong>No projects</strong>
         </div>
     </div>
 </template>
@@ -29,8 +29,13 @@
 <script>
 import ProjectObj from '@/components/ListObjects/ProjectObj.vue'
 export default {
-    props:['current_projects'],
-    
+    props: {
+        current_projects:
+        {
+            type: Object,
+            required: true
+        },
+    },
     components: { ProjectObj },
 
     data() {
@@ -44,8 +49,8 @@ export default {
             this.$emit('delete-project',projectID)
         },
 
-        ChangeProject(projectID,newIDForProject,newNameForProject){
-            this.$emit('change-project', projectID, newIDForProject, newNameForProject)
+        ChangeProject(projectID, projectActive, newIDForProject,newNameForProject){
+            this.$emit('change-project', projectID, projectActive, newIDForProject, newNameForProject)
         },
     },
 }

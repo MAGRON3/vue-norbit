@@ -13,11 +13,14 @@
                     {{ task.name }}
                 </option>
             </select>
-            <select v-model="inputNewWiringTaskHours">
+            <input type="date" v-model="inputNewWiringDate">
+            <select v-model="inputNewWiringHours">
+                <option v-if="GetLastHoursInCurrentDay > 0" value='' disabled>Select Hours</option>
+                <option v-else value='' disabled>No more hours</option>
                 <option 
-                    v-for="(hour,i) in 24" 
+                    v-for="(hour,i) in GetLastHoursInCurrentDay" 
                     v-bind:key="hour"
-                    v-bind:value="i"
+                    v-bind:value="i+1"
                 >
                     {{ hour }}
                 </option>
@@ -33,13 +36,24 @@
 
 <script>
 export default {
-    props:['current_tasks'],
-
+    props: {
+        current_tasks:
+        {
+            type: Object,
+            required: true
+        },
+        current_wirings:
+        {
+            type: Object,
+            required: true
+        },
+    },
     data() {
         return{
             inputNewWiringName: '',
             inputNewWiringTaskId: '',
-            inputNewWiringTaskHours: '0',
+            inputNewWiringDate: '',
+            inputNewWiringHours: '',
         }
     },
 
@@ -51,12 +65,16 @@ export default {
         },
 
         AddWiring(){
-            if (this.inputNewWiringName.trim() && toString(this.inputNewWiringTaskId).trim())
-            {               
+            
+            if (this.inputNewWiringName.length > 0 && 
+            this.inputNewWiringTaskId.length > 0 &&
+            this.inputNewWiringDate.length > 0 &&
+            this.inputNewWiringHours > 0)
+            {         
                 const newWiring = {
                     id: Date.now(),
-                    w_date: this.GetCurrentDateSting(),
-                    w_hours: this.inputNewWiringTaskHours,
+                    w_date: this.inputNewWiringDate,
+                    w_hours: this.inputNewWiringHours,
                     name: this.inputNewWiringName,
                     taskID: this.inputNewWiringTaskId,
                     active: true
@@ -64,7 +82,8 @@ export default {
                 this.$emit('add-wiring',newWiring)
                 this.inputNewWiringName = '';
                 this.inputNewWiringTaskId = '';
-                this.inputNewWiringTaskHours = '0'
+                this.inputNewWiringHours = '';
+                this.inputNewWiringDate = '';
             }
         },
     },
@@ -72,7 +91,21 @@ export default {
     computed:{
         CurrentActiveTask(){
             return this.current_tasks.filter(t => t.active);
-        }
+        },
+
+        GetLastHoursInCurrentDay(){
+            let currentDate = this.inputNewWiringDate;
+            let lastHours = 24;
+            if(this.inputNewWiringDate.trim())
+            {
+                for(let i = 0; i < this.current_wirings.length; i++){
+                    if (this.current_wirings.at(i).w_date === currentDate){
+                        lastHours -= (this.current_wirings.at(i).w_hours);
+                    }
+                }
+            } else lastHours = 0;
+            return lastHours;
+        },
     },
 }
 </script>

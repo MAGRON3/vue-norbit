@@ -2,7 +2,7 @@
     <div class="frame_div">        
         <div v-if="current_tasks.length">
             <strong>List</strong>
-            <table width="500px">
+            <table width="100%">
                 <tr>
                     <td width="5%">№</td>
                     <td width="10%">Active</td>
@@ -51,11 +51,11 @@ export default {
     
     methods:{
         DeleteTask(taskID){
-            this.$emit('delete-task',taskID)
+            this.$emit('delete-task',taskID);
         },
 
-        ChangeTask(taskID,newTaskID,newNameForTask){
-            this.$emit('change-task',taskID,newTaskID,newNameForTask)
+        ChangeTask(taskID,taskActive,newTaskID,newNameForTask){
+            this.$emit('change-task',taskID,taskActive,newTaskID,newNameForTask);
         }
     },    
 }

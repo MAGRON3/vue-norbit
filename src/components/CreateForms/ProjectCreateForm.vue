@@ -22,7 +22,8 @@ export default {
     
     methods:{
         AddProject(){
-            if (this.inputNewProjectName.trim()) {
+            if (this.inputNewProjectName.length > 0 &&
+                this.inputNewProjectCode.length > 0) {
                 const newProject = {
                     id: Date.now(),
                     p_code: this.inputNewProjectCode,

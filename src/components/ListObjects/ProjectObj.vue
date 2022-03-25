@@ -1,7 +1,10 @@
 <template>
     <tr>
         <td>{{index + 1}}</td>
-        <td>{{c_project.active}}</td>
+        <td>
+            <div v-if="!editMode">{{c_project.active}}</div>
+            <input type="checkbox" class="input_edit" v-else v-model="inputActive">
+        </td>
         <td>
             <div v-if="!editMode">{{c_project.p_code}}</div>
             <input class="input_edit" v-else v-model="inputID">
@@ -38,13 +41,14 @@ export default {
         },
 
         ChangeProject(){
+            this.inputActive = this.c_project.active;
             this.inputName = this.c_project.name;
             this.inputID = this.c_project.p_code;
             this.editMode = true;
         },
 
         ConfirmEdit(){
-            this.$emit('change-project', this.c_project.id, this.inputID,this.inputName)
+            this.$emit('change-project', this.c_project.id, this.inputActive,this.inputID,this.inputName)
             this.editMode = false;
         }
     },
@@ -52,6 +56,7 @@ export default {
     data(){
         return{
             editMode: false,
+            inputActive: false,
             inputID: '',
             inputName: '',
         }

@@ -1,12 +1,12 @@
 <template>
-    <tr>
+    <tr v-bind:class="{status_few: GetColorStatusInDay === 0, status_ok: GetColorStatusInDay === 1, status_many: GetColorStatusInDay === 2}">
         <td>{{index + 1}}</td>
         <td>
-            <div v-if="!editMode">{{GetTaskName}}</div>
-            <div v-else>
+            
+            <div v-if="editMode && GetTaskState">
                 <select class="select_edit" v-model="inputNewIDTask">
                     <option 
-                        v-for="task in current_tasks" 
+                        v-for="task in GetAllActiveTask" 
                         v-bind:key="task.id"
                         v-bind:value="task.id"
                     >
@@ -14,6 +14,7 @@
                     </option>
                 </select>
             </div>
+            <div v-else>{{GetTaskName}}</div>
         </td>
         <td>{{c_wiring.w_date}}</td>
         <td>
@@ -21,7 +22,7 @@
             <div v-else>
                 <select class="select_edit" v-model="inputNewHours">
                     <option 
-                        v-for="hours in 24" 
+                        v-for="hours in GetLastHoursInDaySelect" 
                         v-bind:key="hours"
                         v-bind:value="hours"
                     >
@@ -57,6 +58,11 @@ export default {
             type: Object,
             required: true
         },
+        current_wirings:
+        {
+            type: Object,
+            required: true
+        },
         index: Number,
     },
 
@@ -70,13 +76,24 @@ export default {
             this.inputNewIDTask = this.c_wiring.taskID;
             this.inputNewHours = this.c_wiring.w_hours;
             this.inputNewName = this.c_wiring.name;
+            this.lastHoursEditMode = this.GetLastHoursInDay(this.c_wiring.w_date);
             this.editMode = true;
         },
 
         ConfirmEdit(){
             this.$emit('change-wiring',this.c_wiring.id,this.inputNewIDTask,this.inputNewHours,this.inputNewName);
             this.editMode = false;
-        }
+        },
+
+        GetLastHoursInDay(currentDate){
+            let lastHours = 24;
+            for(let i = 0; i < this.current_wirings.length; i++){
+                if (this.current_wirings.at(i).w_date === currentDate){
+                    lastHours -= (this.current_wirings.at(i).w_hours);
+                }
+            }
+            return lastHours;
+        },
     },
 
     computed:{
@@ -86,6 +103,29 @@ export default {
                     return this.current_tasks.at(i).name;
             }
             return '';
+        },
+
+        GetTaskState(){
+            for(let i = 0; i < this.current_tasks.length; i++){
+                if (this.current_tasks.at(i).id === this.c_wiring.taskID) 
+                    return this.current_tasks.at(i).active;
+            }
+            return false;
+        },
+
+        GetAllActiveTask(){
+            return this.current_tasks.filter(t => t.active);
+        },
+
+        GetLastHoursInDaySelect(){
+            return this.lastHoursEditMode + this.c_wiring.w_hours;
+        },
+
+        GetColorStatusInDay(){
+            let lastHours = this.GetLastHoursInDay(this.c_wiring.w_date);
+            if (lastHours > 16) return 0;
+            if (lastHours == 16) return 1;
+            return 2;
         }
     },
 
@@ -95,6 +135,7 @@ export default {
             inputNewIDTask: '',
             inputNewHours: '',
             inputNewName: '',
+            lastHoursEditMode: 24,
         }
     },
 }
@@ -138,5 +179,17 @@ export default {
 .input_edit{
     width: 95%;
     text-align: center;
+}
+
+.status_ok{
+    background: yellowgreen;
+}
+
+.status_few{
+    background: yellow;
+}
+
+.status_many{
+    background: lightcoral;
 }
 </style>

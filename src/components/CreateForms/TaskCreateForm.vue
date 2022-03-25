@@ -24,8 +24,13 @@
 
 <script>
 export default {
-    props:['current_projects'],
-    
+    props: {
+        current_projects:
+        {
+            type: Object,
+            required: true
+        },
+    },
     data() {
         return{
             inputNewNameTask: '',
@@ -35,7 +40,8 @@ export default {
 
     methods:{
         AddTask(){
-            if (this.inputNewNameTask.trim() && toString(this.inputNewTaskProjectId).trim())
+            if (this.inputNewNameTask.length > 0 && 
+            this.inputNewTaskProjectId.length > 0)
             {
                 const newTask = {
                     id: Date.now(),

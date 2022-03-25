@@ -2,7 +2,7 @@
     <div class="frame_div">
         <div v-if="current_wirings.length">
             <strong>List</strong>
-            <table width="500px">
+            <table width="100%">
                 <tr>
                     <td width="3%">№</td>
                     <td width="20%">Task Name</td>
@@ -17,13 +17,14 @@
                     v-bind:index="idx"
                     v-bind:c_wiring="c_wiring"
                     v-bind:current_tasks="current_tasks"
+                    v-bind:current_wirings="current_wirings"
                     @delete-wiring="DeleteWiring"
                     @change-wiring="ChangeWiring"
                 />
             </table>
         </div>
         <div v-else>
-            <strong>Not wirings</strong>
+            <strong>No wirings</strong>
         </div>
     </div>
 </template>
@@ -48,7 +49,7 @@ export default {
 
     data() {
         return{
-
+            
         }
     },
     

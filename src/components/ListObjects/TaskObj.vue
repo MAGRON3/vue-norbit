@@ -1,7 +1,10 @@
 <template>
     <tr>
         <td>{{index + 1}}</td>
-        <td>{{c_task.active}}</td>
+        <td>
+            <div v-if="!editMode">{{c_task.active}}</div>
+            <input type="checkbox" class="input_edit" v-else v-model="inputActive">
+        </td>
         <td>
             <div v-if="!editMode">{{c_task.projectID}}</div>
             <div v-else>
@@ -50,13 +53,14 @@ export default {
         },
 
         ChangeTask(){
+            this.inputActive = this.c_task.active;
             this.inputName = this.c_task.name;
             this.inputID = this.c_task.projectID;
             this.editMode = true;
         },
 
         ConfirmEdit(){
-            this.$emit('change-task', this.c_task.id, this.inputID,this.inputName)
+            this.$emit('change-task', this.c_task.id, this.inputActive, this.inputID,this.inputName)
             this.editMode = false;
         }
     },
@@ -64,6 +68,7 @@ export default {
     data(){
         return{
             editMode: false,
+            inputActive: '',
             inputID: '',
             inputName: '',
         }
