@@ -49,7 +49,7 @@ export default {
     methods: {
         DeleteTask(){
             let result = confirm(`Delete "${this.c_task.name}" ?`);
-            if (result) this.$emit('delete-task',this.c_task.id)
+            if (result) this.$emit('delete-task',this.c_task.id);
         },
 
         ChangeTask(){
@@ -60,7 +60,7 @@ export default {
         },
 
         ConfirmEdit(){
-            this.$emit('change-task', this.c_task.id, this.inputActive, this.inputID,this.inputName)
+            this.$emit('change-task', this.c_task.id, this.inputActive, this.inputID,this.inputName);
             this.editMode = false;
         }
     },

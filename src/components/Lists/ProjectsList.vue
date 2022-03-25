@@ -46,11 +46,11 @@ export default {
     
     methods:{
         DeleteProject(projectID){
-            this.$emit('delete-project',projectID)
+            this.$emit('delete-project',projectID);
         },
 
         ChangeProject(projectID, projectActive, newIDForProject,newNameForProject){
-            this.$emit('change-project', projectID, projectActive, newIDForProject, newNameForProject)
+            this.$emit('change-project', projectID, projectActive, newIDForProject, newNameForProject);
         },
     },
 }

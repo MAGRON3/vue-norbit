@@ -28,7 +28,7 @@ export default {
                     id: Date.now(),
                     p_code: this.inputNewProjectCode,
                     name: this.inputNewProjectName,
-                    active: true
+                    active: true,
                 };
                 this.$emit('add-project',newProject);
                 this.inputNewProjectName = '';

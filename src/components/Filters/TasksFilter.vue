@@ -37,7 +37,7 @@ export default {
 
     methods:{
         ConfirmFilter(){
-            this.$emit('apply-filter', this.filterID, this.filterName, this.filterActive)
+            this.$emit('apply-filter', this.filterID, this.filterName, this.filterActive);
         },
 
         ResetFilter(){

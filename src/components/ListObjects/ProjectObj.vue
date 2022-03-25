@@ -37,7 +37,7 @@ export default {
     methods: {
         DeleteProject(){
             let result = confirm(`Delete "${this.c_project.name}" ?`);
-            if (result) this.$emit('delete-project',this.c_project.id)
+            if (result) this.$emit('delete-project',this.c_project.id);
         },
 
         ChangeProject(){
@@ -48,7 +48,7 @@ export default {
         },
 
         ConfirmEdit(){
-            this.$emit('change-project', this.c_project.id, this.inputActive,this.inputID,this.inputName)
+            this.$emit('change-project', this.c_project.id, this.inputActive,this.inputID,this.inputName);
             this.editMode = false;
         }
     },

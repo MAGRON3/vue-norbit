@@ -47,9 +47,9 @@ export default {
                     id: Date.now(),
                     name: this.inputNewNameTask,
                     projectID: this.inputNewTaskProjectId,
-                    active: true
-                }
-                this.$emit('add-task',newTask)
+                    active: true,
+                };
+                this.$emit('add-task',newTask);
                 this.inputNewNameTask = '';
                 this.inputNewTaskProjectId = '';
             }

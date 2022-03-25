@@ -40,7 +40,7 @@ export default {
 
     methods:{
         ConfirmFilter(){
-            this.$emit('apply-filter', this.filterTaskName, this.filterName, this.filterDate,)
+            this.$emit('apply-filter', this.filterTaskName, this.filterName, this.filterDate,);
         },
 
         ResetFilter(){

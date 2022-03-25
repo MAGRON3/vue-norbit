@@ -77,8 +77,8 @@ export default {
                     w_hours: this.inputNewWiringHours,
                     name: this.inputNewWiringName,
                     taskID: this.inputNewWiringTaskId,
-                    active: true
-                }
+                    active: true,
+                };
                 this.$emit('add-wiring',newWiring)
                 this.inputNewWiringName = '';
                 this.inputNewWiringTaskId = '';

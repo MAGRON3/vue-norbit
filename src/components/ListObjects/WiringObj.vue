@@ -69,7 +69,7 @@ export default {
     methods: {
         DelteWiring(){
             let result = confirm(`Delete "${this.c_wiring.name}" ?`);
-            if (result) this.$emit('delete-wiring',this.c_wiring.id)
+            if (result) this.$emit('delete-wiring',this.c_wiring.id);
         },
 
         ChangeWiring(){
