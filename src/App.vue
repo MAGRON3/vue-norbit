@@ -16,13 +16,13 @@
         </td>
         <td>
           <TaskCreateForm
-            v-bind:current_projects="current_projects"
+            v-bind:current_projects="FilterProjects"
             @add-task="AddTask"
           />
         </td>
         <td>
           <WiringCreateForm
-            v-bind:current_tasks="current_tasks"
+            v-bind:current_tasks="FilterTasks"
             @add-wiring="AddWiring"
           />
         </td>
@@ -107,18 +107,18 @@ export default {
     return{
       current_projects:[
         {id: "1", p_code: "1", name: 'Project 1 Name', active: true},
-        {id: "2", p_code: "2", name: 'Project 2 Name', active: true},
+        {id: "2", p_code: "2", name: 'Project 2 Name', active: false},
         {id: "3", p_code: "3", name: 'Project 3 Name', active: true}
       ],
       current_tasks:[
         {id: "1", name: 'Task 1 Name', projectID: "1", active: true},
-        {id: "2", name: 'Task 2 Name', projectID: "1", active: true},
+        {id: "2", name: 'Task 2 Name', projectID: "1", active: false},
         {id: "3", name: 'Task 3 Name', projectID: "1", active: true}
       ],
       current_wirings:[
-        {id: "1", w_date: "2022-01-01", w_hours: 0, name: 'Wiring 1 Description', taskID: "1"},
-        {id: "2", w_date: "2022-01-01", w_hours: 1, name: 'Wiring 2 Description', taskID: "1"},
-        {id: "3", w_date: "2022-01-01", w_hours: 2, name: 'Wiring 3 Description', taskID: "1"}
+        {id: "1", w_date: "2022-01-01", w_hours: 1, name: 'Wiring 1 Description', taskID: "1"},
+        {id: "2", w_date: "2022-01-01", w_hours: 2, name: 'Wiring 2 Description', taskID: "1"},
+        {id: "3", w_date: "2022-01-01", w_hours: 3, name: 'Wiring 3 Description', taskID: "1"}
       ],
 
       filter_projects:{id:'',name:'',active:''},
@@ -156,9 +156,9 @@ export default {
             }
           }
           this.current_projects.splice(i,1);
+          break;
         }
       }
-        
     },
 
     ChangeProject(id, newIDForProject,newNameForProject){
@@ -180,16 +180,21 @@ export default {
         this.current_tasks.push(newTask);
     },
 
-    DeleteTask(selectedTask)
+    DeleteTask(id)
     {
-      for(let i = this.current_wirings.length - 1; i >= 0; i--)
-      {
-        if (this.current_wirings.at(i).taskID === this.current_tasks.at(selectedTask).id)
-        {
-          this.DeleteWiring(i);
+      for(let i = 0; i < this.current_tasks.length; i++){
+        if (this.current_tasks.at(i).id === id){
+          for(let j = this.current_wirings.length - 1; j >= 0; j--)
+          {
+            if (this.current_wirings.at(j).taskID === this.current_tasks.at(i).id)
+            {
+              this.DeleteWiring(j);
+            }
+          }
+          this.current_tasks.splice(i,1);
+          break;
         }
       }
-      this.current_tasks.splice(selectedTask,1);
     },
 
     ChangeTask(id,newIDForTask,newNameForTask){
@@ -197,6 +202,27 @@ export default {
         if (this.current_tasks.at(i).id === id){
           this.current_tasks.at(i).name = newNameForTask;
           this.current_tasks.at(i).projectID = newIDForTask;
+          break;
+        }
+      }
+    },
+
+    DeleteWiring(id)
+    {
+      for(let i = 0; i < this.current_wirings.length; i++){
+        if (this.current_wirings.at(i).id === id){
+          this.current_wirings.splice(i,1);
+          break;
+        }
+      }
+    },
+
+    ChangeWiring(id,newIDTask,inputNewWiringTaskHours,inputNewWiringName){
+      for(let i = 0; i < this.current_wirings.length; i++){
+        if (this.current_wirings.at(i).id === id){
+          this.current_wirings.at(i).name = inputNewWiringName;
+          this.current_wirings.at(i).w_hours = inputNewWiringTaskHours;
+          this.current_wirings.at(i).taskID = newIDTask;
           break;
         }
       }
