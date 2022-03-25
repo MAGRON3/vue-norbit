@@ -10,7 +10,7 @@
             <div v-else>
                 <select class="select_edit" v-model="inputID">
                     <option 
-                        v-for="project in current_projects" 
+                        v-for="project in GetActiveProjects" 
                         v-bind:key="project.id"
                         v-bind:value="project.p_code"
                     >
@@ -62,6 +62,12 @@ export default {
         ConfirmEdit(){
             this.$emit('change-task', this.c_task.id, this.inputActive, this.inputID,this.inputName)
             this.editMode = false;
+        }
+    },
+
+    computed:{
+        GetActiveProjects(){
+            return this.current_projects.filter(t => t.active || t.p_code == this.c_task.projectID);
         }
     },
 

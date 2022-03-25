@@ -26,7 +26,7 @@
                 </option>
             </select>
             </div>
-            <input type="text" placeholder="Name" v-model="inputNewWiringName">
+            <input type="text" placeholder="Description" v-model="inputNewWiringName">
             <div>
                 <button type="submit">Confirm</button>
             </div>

@@ -6,7 +6,7 @@
             <input type="text" placeholder="Task Name" v-model="filterTaskName">
         </div>
         <div>
-            <input type="text" placeholder="Name" v-model="filterName">
+            <input type="text" placeholder="Description" v-model="filterName">
         </div>
         <div>
             <select v-model="filterDateType">
@@ -44,7 +44,6 @@ export default {
         },
 
         ResetFilter(){
-            console.log(this.filterDate);
             this.filterTaskName = '';
             this.filterName = '';
             this.filterDate = '';

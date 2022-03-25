@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <h1>Корпоративный портал учета рабочего времени</h1>
+    <h1>Corporate time tracking portal</h1>
+    <hr/>
     <table v-if="!loader">
       <tr>
         <td><strong>Projects</strong></td>
@@ -80,12 +81,6 @@
       </tr>
     </table>
     <hr/>
-    <div>
-      <strong>TODO List</strong>
-      <ul>
-        <li>1</li>
-      </ul>
-    </div>
   </div>
 </template>
 
@@ -157,8 +152,6 @@ export default {
         if (this.current_projects.at(i).id === id){
           for(let j = this.current_tasks.length - 1; j >= 0; j--)
           {
-            console.log(this.current_tasks.at(j).projectID);
-            console.log(this.current_projects.at(i).p_code);
             if (this.current_tasks.at(j).projectID === this.current_projects.at(i).p_code)
             {
               this.DeleteTask(this.current_tasks.at(j).id);
@@ -218,6 +211,11 @@ export default {
       }
     },
 
+    AddWiring(newWiring){
+      this.current_wirings.push(newWiring);
+    },
+
+
     DeleteWiring(id)
     {
       for(let i = 0; i < this.current_wirings.length; i++){
@@ -239,23 +237,19 @@ export default {
       }
     },
 
-    AddWiring(newWiring){
-      this.current_wirings.push(newWiring);
-    },
-
-    ApplyFilterProjects(pID,pName,pActive){
+    ApplyFilterProjects(pID, pName, pActive){
       this.filter_projects.id = pID;
       this.filter_projects.name = pName;
       this.filter_projects.active = pActive;
     },
 
-    ApplyFilterTasks(pID,pName,pActive){
+    ApplyFilterTasks(pID, pName, pActive){
       this.filter_tasks.id = pID;
       this.filter_tasks.name = pName;
       this.filter_tasks.active = pActive;
     },
 
-    ApplyFilterWirings(pTaskName,pName, pDate){
+    ApplyFilterWirings(pTaskName, pName, pDate){
       this.filter_wirings.taskName = pTaskName;
       this.filter_wirings.name = pName;
       this.filter_wirings.date = pDate;
