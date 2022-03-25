@@ -5,7 +5,7 @@
             <strong> Filter </strong>
             </div>
             <div>
-                <input type="text" placeholder="Id" v-model="filterID">
+                <input type="text" placeholder="Code" v-model="filterID">
             </div>
             <div>
                 <input type="text" placeholder="Name" v-model="filterName">

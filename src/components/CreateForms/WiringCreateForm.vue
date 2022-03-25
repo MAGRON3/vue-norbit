@@ -4,9 +4,9 @@
         <form @submit.prevent="AddWiring">
             <div>
             <select v-model="inputNewWiringTaskId">
-                <option value=''>Select Task</option>
+                <option value='' disabled>Select Task</option>
                 <option 
-                    v-for="task in current_tasks" 
+                    v-for="task in CurrentActiveTask" 
                     v-bind:key="task.id"
                     v-bind:value="task.id"
                 >
@@ -19,7 +19,7 @@
                     v-bind:key="hour"
                     v-bind:value="i"
                 >
-                    {{ hour - 1 }}
+                    {{ hour }}
                 </option>
             </select>
             </div>
@@ -67,7 +67,13 @@ export default {
                 this.inputNewWiringTaskHours = '0'
             }
         },
-    }
+    },
+
+    computed:{
+        CurrentActiveTask(){
+            return this.current_tasks.filter(t => t.active);
+        }
+    },
 }
 </script>
 

@@ -2,11 +2,12 @@
     <div class="frame_div">        
         <div v-if="current_projects.length">
             <strong>List</strong>
-            <table width="400px">
+            <table width="500px">
                 <tr>
                     <td width="5%">№</td>
+                    <td width="5%">Active</td>
                     <td width="20%">Code</td>
-                    <td width="60%">Name</td>
+                    <td width="50%">Name</td>
                     <td width="15%"></td>
                 </tr>
                 <ProjectObj

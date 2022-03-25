@@ -28,8 +28,8 @@ export default {
                     p_code: this.inputNewProjectCode,
                     name: this.inputNewProjectName,
                     active: true
-                }
-                this.$emit('add-project',newProject)
+                };
+                this.$emit('add-project',newProject);
                 this.inputNewProjectName = '';
                 this.inputNewProjectCode = '';
             }

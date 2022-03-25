@@ -1,6 +1,7 @@
 <template>
     <tr>
         <td>{{index + 1}}</td>
+        <td>{{c_task.active}}</td>
         <td>
             <div v-if="!editMode">{{c_task.projectID}}</div>
             <div v-else>
@@ -45,14 +46,13 @@ export default {
     methods: {
         DeleteTask(){
             let result = confirm(`Delete "${this.c_task.name}" ?`);
-            if (result) this.$emit('delete-task',this.index)
+            if (result) this.$emit('delete-task',this.c_task.id)
         },
 
         ChangeTask(){
             this.inputName = this.c_task.name;
             this.inputID = this.c_task.projectID;
             this.editMode = true;
-            console.log(this.inputID);
         },
 
         ConfirmEdit(){

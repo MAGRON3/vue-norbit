@@ -4,12 +4,12 @@
             <strong>List</strong>
             <table width="500px">
                 <tr>
-                    <td width="5%">№</td>
-                    <td width="30%">Task Name</td>
-                    <td width="20%">Date</td>
+                    <td width="3%">№</td>
+                    <td width="20%">Task Name</td>
+                    <td width="18%">Date</td>
                     <td width="5%">Hours</td>
-                    <td width="50%">Description</td>
-                    <!-- <td width="15%"></td> -->
+                    <td width="35%">Description</td>
+                    <td width="15%"></td>
                 </tr>
                 <WiringObj
                     v-for="(c_wiring,idx) in current_wirings"
@@ -53,7 +53,13 @@ export default {
     },
     
     methods:{
+        DeleteWiring(id){
+            this.$emit('delete-wiring',id);
+        },
 
+        ChangeWiring(id,newIDTask,inputNewWiringTaskHours,inputNewWiringName){
+            this.$emit('change-wiring',id,newIDTask,inputNewWiringTaskHours,inputNewWiringName);
+        }
     },
 }
 </script>

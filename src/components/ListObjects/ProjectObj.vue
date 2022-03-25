@@ -1,6 +1,7 @@
 <template>
     <tr>
         <td>{{index + 1}}</td>
+        <td>{{c_project.active}}</td>
         <td>
             <div v-if="!editMode">{{c_project.p_code}}</div>
             <input class="input_edit" v-else v-model="inputID">

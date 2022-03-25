@@ -4,9 +4,9 @@
         <form @submit.prevent="AddTask">
             <div>
                 <select v-model="inputNewTaskProjectId">
-                    <option value=''>Select Project</option>
+                    <option value='' disabled>Select Project</option>
                     <option 
-                        v-for="project in current_projects" 
+                        v-for="project in CurrentActiveProjects" 
                         v-bind:key="project.id"
                         v-bind:value="project.id"
                     >
@@ -48,6 +48,12 @@ export default {
                 this.inputNewTaskProjectId = '';
             }
         },
+    },
+
+    computed:{
+        CurrentActiveProjects(){
+            return this.current_projects.filter(t => t.active);
+        }
     }
 }
 </script>

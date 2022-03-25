@@ -26,7 +26,7 @@ export default {
             filterTaskName: '',
             filterName: '',
         }
-    },
+    }, 
 
     methods:{
         ConfirmFilter(){

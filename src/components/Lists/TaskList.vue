@@ -2,9 +2,10 @@
     <div class="frame_div">        
         <div v-if="current_tasks.length">
             <strong>List</strong>
-            <table width="400px">
+            <table width="500px">
                 <tr>
                     <td width="5%">№</td>
+                    <td width="10%">Active</td>
                     <td width="25%">Project Code</td>
                     <td width="45%">Name</td>
                     <td width="15%"></td>
