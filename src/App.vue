@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1>Корпоративный портал учета рабочего времени</h1>
-    <table>
+    <table v-if="!loader">
       <tr>
         <td><strong>Projects</strong></td>
         <td><strong>Tasks</strong></td>
@@ -125,6 +125,8 @@ export default {
       filter_projects:{id:'',name:'',active:''},
       filter_tasks:{id:'',name:'',active:''},
       filter_wirings:{taskName:'',name:'',date: ''},
+
+      loader: false,
     }
   },
   
@@ -138,6 +140,10 @@ export default {
     ProjectFilter,
     TaskFilter,
     WiringFilter,
+  },
+
+  mounted() {
+  
   },
 
   methods:{
