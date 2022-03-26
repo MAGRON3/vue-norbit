@@ -167,11 +167,6 @@ export default {
       for(let i = 0; i < this.current_projects.length; i++){
         if (this.current_projects.at(i).id === id){
           this.current_projects.at(i).name = newNameForProject;
-          for(let j = 0; j < this.current_tasks.length; j++){
-            if (this.current_tasks.at(j).projectID === this.current_projects.at(i).p_code){
-              this.current_tasks.at(j).projectID = newIDForProject;
-            }
-          }
           this.current_projects.at(i).p_code = newIDForProject;
           this.current_projects.at(i).active = projectActive;
           break;
@@ -226,12 +221,13 @@ export default {
       }
     },
 
-    ChangeWiring(id,newIDTask,inputNewWiringTaskHours,inputNewWiringName){
+    ChangeWiring(id,newIDTask,inputNewWiringTaskHours,inputNewDate,inputNewWiringName){
       for(let i = 0; i < this.current_wirings.length; i++){
         if (this.current_wirings.at(i).id === id){
           this.current_wirings.at(i).name = inputNewWiringName;
           this.current_wirings.at(i).w_hours = inputNewWiringTaskHours;
           this.current_wirings.at(i).taskID = newIDTask;
+          this.current_wirings.at(i).w_date = inputNewDate;
           break;
         }
       }

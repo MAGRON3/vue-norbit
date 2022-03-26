@@ -65,9 +65,8 @@ export default {
         },
 
         AddWiring(){
-            
             if (this.inputNewWiringName.length > 0 && 
-            this.inputNewWiringTaskId.length > 0 &&
+            toString(this.inputNewWiringTaskId).length > 0 &&
             this.inputNewWiringDate.length > 0 &&
             this.inputNewWiringHours > 0)
             {         

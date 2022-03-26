@@ -6,13 +6,13 @@
             <input type="checkbox" class="input_edit" v-else v-model="inputActive">
         </td>
         <td>
-            <div v-if="!editMode">{{c_task.projectID}}</div>
+            <div v-if="!editMode">{{GetProjectPCode}}</div>
             <div v-else>
                 <select class="select_edit" v-model="inputID">
                     <option 
                         v-for="project in GetActiveProjects" 
                         v-bind:key="project.id"
-                        v-bind:value="project.p_code"
+                        v-bind:value="project.id"
                     >
                         {{ project.name }}
                     </option>
@@ -42,7 +42,8 @@ export default {
         },
         index: Number,
         current_projects: {
-            type: Object
+            type: Object,
+            required: true
         },
     },
 
@@ -68,7 +69,14 @@ export default {
     computed:{
         GetActiveProjects(){
             return this.current_projects.filter(t => t.active || t.p_code == this.c_task.projectID);
-        }
+        },
+
+        GetProjectPCode(){
+            for(let i = 0; i <this.current_projects.length; i++){
+                if (this.current_projects.at(i).id === this.c_task.projectID) return this.current_projects.at(i).p_code;
+            }
+            return '';
+        },
     },
 
     data(){

@@ -16,11 +16,16 @@
             </div>
             <div v-else>{{GetTaskName}}</div>
         </td>
-        <td>{{c_wiring.w_date}}</td>
+        <td>
+            <div v-if="!editMode">{{c_wiring.w_date}}</div>
+            <input class="input_edit" v-else type="date" v-model="inputNewDate">
+        </td>
         <td>
             <div v-if="!editMode">{{c_wiring.w_hours}}</div>
             <div v-else>
                 <select class="select_edit" v-model="inputNewHours">
+                    <option v-if="GetLastHoursInDaySelect > 0" value='' disabled>Select Hours</option>
+                    <option v-else value='' disabled>No more hours</option>
                     <option 
                         v-for="hours in GetLastHoursInDaySelect" 
                         v-bind:key="hours"
@@ -66,6 +71,17 @@ export default {
         index: Number,
     },
 
+    data(){
+        return{
+            editMode: false,
+            inputNewIDTask: '',
+            inputNewHours: '',
+            inputNewName: '',
+            inputNewDate: '',
+            lastHoursEditMode: 24,
+        }
+    },
+
     methods: {
         DelteWiring(){
             let result = confirm(`Delete "${this.c_wiring.name}" ?`);
@@ -76,12 +92,17 @@ export default {
             this.inputNewIDTask = this.c_wiring.taskID;
             this.inputNewHours = this.c_wiring.w_hours;
             this.inputNewName = this.c_wiring.name;
+            this.inputNewDate = this.c_wiring.w_date;
             this.lastHoursEditMode = this.GetLastHoursInDay(this.c_wiring.w_date);
             this.editMode = true;
         },
 
         ConfirmEdit(){
-            this.$emit('change-wiring',this.c_wiring.id,this.inputNewIDTask,this.inputNewHours,this.inputNewName);
+            if (toString(this.inputNewIDTask).length > 0 &&
+            this.inputNewHours <= this.GetLastHoursInDaySelect &&
+            this.inputNewDate.length > 0 &&
+            this.inputNewName.length)
+                this.$emit('change-wiring',this.c_wiring.id,this.inputNewIDTask,this.inputNewHours,this.inputNewDate,this.inputNewName);
             this.editMode = false;
         },
 
@@ -94,6 +115,16 @@ export default {
             }
             return lastHours;
         },
+    },
+
+    watch:{
+        inputNewDate(){
+            this.lastHoursEditMode = this.GetLastHoursInDay(this.inputNewDate);
+            if(this.inputNewDate === this.c_wiring.w_date)
+                this.inputNewHours = this.c_wiring.w_hours;
+            if (this.inputNewHours > this.GetLastHoursInDaySelect) 
+                this.inputNewHours = this.GetLastHoursInDaySelect;
+        }
     },
 
     computed:{
@@ -118,7 +149,9 @@ export default {
         },
 
         GetLastHoursInDaySelect(){
-            return this.lastHoursEditMode + this.c_wiring.w_hours;
+            if (this.c_wiring.w_date === this.inputNewDate)
+                return this.lastHoursEditMode + this.c_wiring.w_hours;
+                return this.lastHoursEditMode;
         },
 
         GetColorStatusInDay(){
@@ -126,16 +159,6 @@ export default {
             if (lastHours > 16) return 0;
             if (lastHours == 16) return 1;
             return 2;
-        }
-    },
-
-    data(){
-        return{
-            editMode: false,
-            inputNewIDTask: '',
-            inputNewHours: '',
-            inputNewName: '',
-            lastHoursEditMode: 24,
         }
     },
 }

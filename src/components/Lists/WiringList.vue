@@ -58,8 +58,8 @@ export default {
             this.$emit('delete-wiring',id);
         },
 
-        ChangeWiring(id,newIDTask,inputNewWiringTaskHours,inputNewWiringName){
-            this.$emit('change-wiring',id,newIDTask,inputNewWiringTaskHours,inputNewWiringName);
+        ChangeWiring(id,newIDTask,inputNewWiringTaskHours,inputNewDate,inputNewWiringName){
+            this.$emit('change-wiring',id,newIDTask,inputNewWiringTaskHours,inputNewDate,inputNewWiringName);
         }
     },
 }

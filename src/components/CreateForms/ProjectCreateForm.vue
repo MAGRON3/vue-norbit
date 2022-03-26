@@ -3,7 +3,7 @@
         <strong>Create new project</strong>
         <form @submit.prevent="AddProject">
             <input type="text" placeholder="Name" v-model="inputNewProjectName">
-            <input type="text" placeholder="Code" v-model="inputNewProjectCode">
+            <input type="number" placeholder="Code" v-model="inputNewProjectCode">
             <div>
                 <button type="submit">Confirm</button>
             </div>
@@ -23,7 +23,7 @@ export default {
     methods:{
         AddProject(){
             if (this.inputNewProjectName.length > 0 &&
-                this.inputNewProjectCode.length > 0) {
+                this.inputNewProjectCode !== '') {
                 const newProject = {
                     id: Date.now(),
                     p_code: this.inputNewProjectCode,

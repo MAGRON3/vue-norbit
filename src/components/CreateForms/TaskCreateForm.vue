@@ -39,9 +39,10 @@ export default {
     },
 
     methods:{
+
         AddTask(){
             if (this.inputNewNameTask.length > 0 && 
-            this.inputNewTaskProjectId.length > 0)
+            toString(this.inputNewTaskProjectId).length > 0)
             {
                 const newTask = {
                     id: Date.now(),
