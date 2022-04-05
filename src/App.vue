@@ -80,6 +80,8 @@
         </td>
       </tr>
     </table>
+    <div v-else> Loading...
+    </div>
     <hr/>
   </div>
 </template>
@@ -101,27 +103,15 @@ export default {
   name: 'App',
   data(){
     return{
-      current_projects:[
-        {id: "1", p_code: 1, name: 'Project 1 Name', active: true},
-        {id: "2", p_code: 2, name: 'Project 2 Name', active: false},
-        {id: "3", p_code: 3, name: 'Project 3 Name', active: true}
-      ],
-      current_tasks:[
-        {id: "1", name: 'Task 1 Name', project_code: 1, active: true},
-        {id: "2", name: 'Task 2 Name', project_code: 1, active: false},
-        {id: "3", name: 'Task 3 Name', project_code: 1, active: true}
-      ],
-      current_wirings:[
-        {id: "1", w_date: "2022-01-01", w_hours: 1, name: 'Wiring 1 Description', task_code: "1"},
-        {id: "2", w_date: "2022-01-01", w_hours: 2, name: 'Wiring 2 Description', task_code: "1"},
-        {id: "3", w_date: "2022-01-01", w_hours: 3, name: 'Wiring 3 Description', task_code: "1"}
-      ],
+      current_projects:[],
+      current_tasks:[],
+      current_wirings:[],
 
       filter_projects:{id:'',name:'',active:''},
       filter_tasks:{id:'',name:'',active:''},
       filter_wirings:{taskName:'',name:'',date: ''},
 
-      loader: false,
+      loader: true,
     }
   },
   
@@ -138,23 +128,21 @@ export default {
   },
 
   mounted() {
-    fetch('https://localhost:5001/api/projects')
+    fetch('https://localhost:5001/db/projects')
     .then(response => response.json())
     .then(json => {
       this.current_projects = json;
-      console.log(this.current_projects);
     });
-    fetch('https://localhost:5001/api/tasks')
+    fetch('https://localhost:5001/db/tasks')
     .then(response => response.json())
     .then(json => {
       this.current_tasks = json;
-      console.log(this.current_tasks);
     });
-    fetch('https://localhost:5001/api/wirings')
+    fetch('https://localhost:5001/db/wirings')
     .then(response => response.json())
     .then(json => {
       this.current_wirings = json;
-      console.log(this.current_wirings);
+      this.loader = false;
     });
   },
 
@@ -165,7 +153,7 @@ export default {
           headers: { "Content-Type": "application/json; charset=utf-8" },
           body: JSON.stringify({ name: newProject.name, p_code: newProject.p_code, active: newProject.active })
         };
-        fetch("https://localhost:5001/api/projects", requestOptions)
+        fetch("https://localhost:5001/db/projects", requestOptions)
         .then(response => response.json())
         .then(json => {
           newProject = json;
@@ -189,7 +177,7 @@ export default {
             method: "DELETE",
           };
           console.log(requestOptions);
-            fetch("https://localhost:5001/api/projects/"+this.current_projects.at(i).id, requestOptions)
+            fetch("https://localhost:5001/db/projects/"+this.current_projects.at(i).id, requestOptions)
             .then(response => response.json());
           this.current_projects.splice(i,1);
           break;
@@ -205,7 +193,7 @@ export default {
             headers: { "Content-Type": "application/json; charset=utf-8" },
             body: JSON.stringify({id: this.current_projects.at(i).id, name: newNameForProject, p_code: newIDForProject, active: projectActive })
           };
-          fetch("https://localhost:5001/api/projects", requestOptions)
+          fetch("https://localhost:5001/db/projects", requestOptions)
           .then(response => response.json())
           .then(json => {
             this.current_projects.at(i).name = json.name;
@@ -223,7 +211,7 @@ export default {
           headers: { "Content-Type": "application/json; charset=utf-8" },
           body: JSON.stringify({ name: newTask.name, project_code: newTask.project_code, active: newTask.active })
         };
-        fetch("https://localhost:5001/api/tasks", requestOptions)
+        fetch("https://localhost:5001/db/tasks", requestOptions)
         .then(response => response.json())
         .then(json => {
           newTask = json;
@@ -246,7 +234,7 @@ export default {
             method: "DELETE",
           };
           console.log(requestOptions);
-            fetch("https://localhost:5001/api/tasks/"+this.current_tasks.at(i).id, requestOptions)
+            fetch("https://localhost:5001/db/tasks/"+this.current_tasks.at(i).id, requestOptions)
             .then(response => response.json());
           this.current_tasks.splice(i,1);
           break;
@@ -262,7 +250,7 @@ export default {
             headers: { "Content-Type": "application/json; charset=utf-8" },
             body: JSON.stringify({ id: this.current_tasks.at(i).id, name: newNameForTask, project_code: newIDForTask, active: taskActive })
           };
-          fetch("https://localhost:5001/api/tasks", requestOptions)
+          fetch("https://localhost:5001/db/tasks", requestOptions)
           .then(response => response.json())
           .then(json => {
             this.current_tasks.at(i).name = json.name;
@@ -280,7 +268,7 @@ export default {
           headers: { "Content-Type": "application/json; charset=utf-8" },
           body: JSON.stringify({ name: newWiring.name, task_code: newWiring.task_code, w_date: newWiring.w_date, w_hours: newWiring.w_hours })
         };
-        fetch("https://localhost:5001/api/wirings", requestOptions)
+        fetch("https://localhost:5001/db/wirings", requestOptions)
         .then(response => response.json())
         .then(json => {
           newWiring = json;
@@ -297,7 +285,7 @@ export default {
             method: "DELETE",
           };
           console.log(requestOptions);
-            fetch("https://localhost:5001/api/wirings/"+this.current_wirings.at(i).id, requestOptions)
+            fetch("https://localhost:5001/db/wirings/"+this.current_wirings.at(i).id, requestOptions)
             .then(response => response.json());
           this.current_wirings.splice(i,1);
           break;
@@ -313,7 +301,7 @@ export default {
             headers: { "Content-Type": "application/json; charset=utf-8" },
             body: JSON.stringify({ id: this.current_wirings.at(i).id,  name: inputNewWiringName, task_code: newIDTask, w_date: inputNewDate, w_hours: inputNewWiringTaskHours })
           };
-          fetch("https://localhost:5001/api/wirings", requestOptions)
+          fetch("https://localhost:5001/db/wirings", requestOptions)
           .then(response => response.json())
           .then(json => {
             this.current_wirings.at(i).name = json.name;
@@ -344,6 +332,15 @@ export default {
       this.filter_wirings.name = pName;
       this.filter_wirings.date = pDate;
     },
+
+    GetProjectCodeForId(projectID)
+    {
+      for(let i = 0; i < this.current_projects.length; i++)
+      {
+        if (this.current_projects.at(i).id === projectID) return this.current_projects.at(i).p_code.toString();
+      }
+      return '';
+    }
   },
 
   computed:{
@@ -355,9 +352,9 @@ export default {
     },
 
     FilterTasks() {
-      if (this.filter_tasks.active === 'all') return this.current_tasks.filter(t => ((t.name.indexOf(this.filter_tasks.name) > -1) && t.project_code.toString().indexOf(this.filter_tasks.id) > -1));
-      if (this.filter_tasks.active === 'active') return this.current_tasks.filter(t => (t.active && (t.name.indexOf(this.filter_tasks.name) > -1) && t.project_code.toString().indexOf(this.filter_tasks.id) > -1));
-      if (this.filter_tasks.active === 'inactive') return this.current_tasks.filter(t => (!t.active && (t.name.indexOf(this.filter_tasks.name) > -1) && t.project_code.toString().indexOf(this.filter_tasks.id) > -1));
+      if (this.filter_tasks.active === 'all') return this.current_tasks.filter(t => ((t.name.indexOf(this.filter_tasks.name) > -1) && this.GetProjectCodeForId(t.project_code).indexOf(this.filter_tasks.id) > -1));
+      if (this.filter_tasks.active === 'active') return this.current_tasks.filter(t => (t.active && (t.name.indexOf(this.filter_tasks.name) > -1) && this.GetProjectCodeForId(t.project_code).indexOf(this.filter_tasks.id) > -1));
+      if (this.filter_tasks.active === 'inactive') return this.current_tasks.filter(t => (!t.active && (t.name.indexOf(this.filter_tasks.name) > -1) && this.GetProjectCodeForId(t.project_code).indexOf(this.filter_tasks.id) > -1));
       return  this.current_tasks;
     },
 
@@ -367,7 +364,7 @@ export default {
       let filtered_result = new Array;
       for (let i = 0; i < filtered_for_name.length; i++){
         for (let j = 0; j < filtered_task_for_name.length; j++){
-          if(filtered_for_name.at(i).task_code === filtered_task_for_name.at(j).id){
+          if(filtered_for_name.at(i).task_code === filtered_task_for_name.at(j).id) {
             filtered_result.push(filtered_for_name.at(i));
             break;
           }
