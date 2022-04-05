@@ -89,7 +89,7 @@ export default {
         },
 
         ChangeWiring(){
-            this.inputNewIDTask = this.c_wiring.taskID;
+            this.inputNewIDTask = this.c_wiring.task_code;
             this.inputNewHours = this.c_wiring.w_hours;
             this.inputNewName = this.c_wiring.name;
             this.inputNewDate = this.c_wiring.w_date;
@@ -130,7 +130,7 @@ export default {
     computed:{
         GetTaskName(){
             for(let i = 0; i < this.current_tasks.length; i++){
-                if (this.current_tasks.at(i).id === this.c_wiring.taskID) 
+                if (this.current_tasks.at(i).id === this.c_wiring.task_code) 
                     return this.current_tasks.at(i).name;
             }
             return '';
@@ -138,7 +138,7 @@ export default {
 
         GetTaskState(){
             for(let i = 0; i < this.current_tasks.length; i++){
-                if (this.current_tasks.at(i).id === this.c_wiring.taskID) 
+                if (this.current_tasks.at(i).id === this.c_wiring.task_code) 
                     return this.current_tasks.at(i).active;
             }
             return false;

@@ -65,17 +65,17 @@ export default {
         },
 
         AddWiring(){
+            console.log()
             if (this.inputNewWiringName.length > 0 && 
-            toString(this.inputNewWiringTaskId).length > 0 &&
+            this.inputNewWiringTaskId.toString().length > 0 &&
             this.inputNewWiringDate.length > 0 &&
             this.inputNewWiringHours > 0)
             {         
                 const newWiring = {
-                    id: Date.now(),
                     w_date: this.inputNewWiringDate,
                     w_hours: this.inputNewWiringHours,
                     name: this.inputNewWiringName,
-                    taskID: this.inputNewWiringTaskId,
+                    task_code: this.inputNewWiringTaskId,
                     active: true,
                 };
                 this.$emit('add-wiring',newWiring)

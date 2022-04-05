@@ -7,7 +7,7 @@
         </td>
         <td>
             <div v-if="!editMode">{{c_project.p_code}}</div>
-            <input class="input_edit" v-else v-model="inputID">
+            <input type="number" class="input_edit" v-else v-model="inputID">
         </td>
         <td>
             <span v-if="!editMode" v-bind:class="{is_done: !c_project.active}">{{c_project.name}}</span>

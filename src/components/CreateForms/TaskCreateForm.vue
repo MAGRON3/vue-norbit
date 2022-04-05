@@ -3,7 +3,7 @@
         <strong>Create new task</strong>
         <form @submit.prevent="AddTask">
             <div>
-                <select v-model="inputNewTaskProjectId">
+                <select v-model="inputNewTaskProjectCode">
                     <option value='' disabled>Select Project</option>
                     <option 
                         v-for="project in CurrentActiveProjects" 
@@ -34,7 +34,7 @@ export default {
     data() {
         return{
             inputNewNameTask: '',
-            inputNewTaskProjectId: '',
+            inputNewTaskProjectCode: '',
         }
     },
 
@@ -42,17 +42,16 @@ export default {
 
         AddTask(){
             if (this.inputNewNameTask.length > 0 && 
-            toString(this.inputNewTaskProjectId).length > 0)
+            this.inputNewTaskProjectCode.toString().length > 0)
             {
                 const newTask = {
-                    id: Date.now(),
                     name: this.inputNewNameTask,
-                    projectID: this.inputNewTaskProjectId,
+                    project_code: this.inputNewTaskProjectCode,
                     active: true,
                 };
                 this.$emit('add-task',newTask);
                 this.inputNewNameTask = '';
-                this.inputNewTaskProjectId = '';
+                this.inputNewTaskProjectCode = '';
             }
         },
     },

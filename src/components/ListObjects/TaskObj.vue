@@ -56,7 +56,7 @@ export default {
         ChangeTask(){
             this.inputActive = this.c_task.active;
             this.inputName = this.c_task.name;
-            this.inputID = this.c_task.projectID;
+            this.inputID = this.c_task.project_code;
             this.editMode = true;
         },
 
@@ -68,12 +68,12 @@ export default {
 
     computed:{
         GetActiveProjects(){
-            return this.current_projects.filter(t => t.active || t.p_code == this.c_task.projectID);
+            return this.current_projects.filter(t => t.active || t.id == this.c_task.project_code);
         },
 
         GetProjectPCode(){
             for(let i = 0; i <this.current_projects.length; i++){
-                if (this.current_projects.at(i).id === this.c_task.projectID) return this.current_projects.at(i).p_code;
+                if (this.current_projects.at(i).id === this.c_task.project_code) return this.current_projects.at(i).p_code;
             }
             return '';
         },

@@ -25,7 +25,6 @@ export default {
             if (this.inputNewProjectName.length > 0 &&
                 this.inputNewProjectCode !== '') {
                 const newProject = {
-                    id: Date.now(),
                     p_code: this.inputNewProjectCode,
                     name: this.inputNewProjectName,
                     active: true,

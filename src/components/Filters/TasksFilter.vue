@@ -5,7 +5,7 @@
         <strong> Filter </strong>
         </div>
         <div>
-            <input type="text" placeholder="Project Code" v-model="filterID">
+            <input type="number" placeholder="Project Code" v-model="filterID">
         </div>
         <div>
             <input type="text" placeholder="Name" v-model="filterName">
@@ -37,7 +37,7 @@ export default {
 
     methods:{
         ConfirmFilter(){
-            this.$emit('apply-filter', this.filterID, this.filterName, this.filterActive);
+            this.$emit('apply-filter', this.filterID.toString(), this.filterName, this.filterActive);
         },
 
         ResetFilter(){
